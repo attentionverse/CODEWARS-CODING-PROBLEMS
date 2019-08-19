@@ -1,11 +1,20 @@
+import numpy as np
+
+
+def generate_primes(n):
+    is_prime = np.ones(n+1, dtype=bool)
+    is_prime[0:2] = False
+    for i in range(int(n**0.5)+1):
+        if is_prime[i]:
+            is_prime[i*2::i]=False
+    return np.where(is_prime)[0]
+
+
 def get_prime_in_interval(start, end):
-    for val in range(start, end + 1):
-        if val > 1:
-            for n in range(2, val // 2):
-                if (val % n) == 0:
-                    break
-            else:
-                yield val
+    primes = generate_primes(end)
+    for prime in primes:
+        if prime >= start:
+            yield prime
 
 
 def gap(g, m, n):
